@@ -1,0 +1,110 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "HTTP server for proxying **HTTP**-requests to 3rd-party services.",
+        "title": "proxxy",
+        "contact": {
+            "name": "doublefint",
+            "email": "doublefint@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:8080",
+    "basePath": "/",
+    "paths": {
+        "/": {
+            "get": {
+                "description": "Proxying **HTTP**-requests to 3rd-party services.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "/"
+                ],
+                "summary": "Proxxy endpoint",
+                "parameters": [
+                    {
+                        "description": "client request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/client.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/client.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "invalid input",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "server side error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "client.Request": {
+            "type": "object",
+            "properties": {
+                "headers": {
+                    "description": "client request headers",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "method": {
+                    "description": "client request method",
+                    "type": "string",
+                    "example": "GET"
+                },
+                "url": {
+                    "description": "client request url",
+                    "type": "string",
+                    "example": "http://google.com"
+                }
+            }
+        },
+        "client.Response": {
+            "type": "object",
+            "properties": {
+                "headers": {
+                    "description": "headers array from 3rd-party service response",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "description": "generated unique id",
+                    "type": "integer"
+                },
+                "length": {
+                    "description": "content length of 3rd-party service response",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "HTTP status of 3rd-party service response",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

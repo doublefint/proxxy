@@ -1,0 +1,75 @@
+basePath: /
+definitions:
+  client.Request:
+    properties:
+      headers:
+        additionalProperties:
+          type: string
+        description: client request headers
+        type: object
+      method:
+        description: client request method
+        example: GET
+        type: string
+      url:
+        description: client request url
+        example: http://google.com
+        type: string
+    type: object
+  client.Response:
+    properties:
+      headers:
+        additionalProperties:
+          type: string
+        description: headers array from 3rd-party service response
+        type: object
+      id:
+        description: generated unique id
+        type: integer
+      length:
+        description: content length of 3rd-party service response
+        type: integer
+      status:
+        description: HTTP status of 3rd-party service response
+        type: string
+    type: object
+host: 127.0.0.1:8080
+info:
+  contact:
+    email: doublefint@gmail.com
+    name: doublefint
+  description: HTTP server for proxying **HTTP**-requests to 3rd-party services.
+  title: proxxy
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Proxying **HTTP**-requests to 3rd-party services.
+      parameters:
+      - description: client request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/client.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/client.Response'
+        "400":
+          description: invalid input
+          schema:
+            type: string
+        "500":
+          description: server side error
+          schema:
+            type: string
+      summary: Proxxy endpoint
+      tags:
+      - /
+swagger: "2.0"

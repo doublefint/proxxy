@@ -1,0 +1,16 @@
+run:
+    # timeout for analysis, e.g. 30s, 5m, default is 1m
+    timeout: 2m
+
+    # include test files or not, default is true
+    tests: true
+
+linters:
+    enable:
+        - revive
+        - stylecheck
+        - goimports
+
+issues:
+    # Disable default exclusion (otherwise most of revive issues are not catched)
+    exclude-use-default: false
