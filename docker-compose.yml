@@ -8,5 +8,7 @@ services:
             dockerfile: ./docker/Dockerfile
         env_file:
             - .env
+        ports:
+            - ${PROXXY_PORT}:${PROXXY_PORT}
         volumes:
             - ./:/go/cmd/app
